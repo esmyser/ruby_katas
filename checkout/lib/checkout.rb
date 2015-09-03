@@ -21,9 +21,14 @@ class Checkout
 
   def total
     total = 0
+
     unless @items.empty?
       @items.each do |item_key, item_values|
-        total += (item_values[:price] * item_values[:quantity])
+        if item_values[:offers] && item_values[:quantity] % item_values[:offers].first == 0
+          total += (item_values[:offers].last * (item_values[:offers].first / item_values[:quantity]))
+        else
+          total += (item_values[:price] * item_values[:quantity])
+        end
       end
     end
 
