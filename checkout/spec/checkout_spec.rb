@@ -11,7 +11,24 @@ require File.dirname(__FILE__) + '/../lib/checkout'
 RSpec.describe Checkout do
 
   def price(goods = [])
-    prices_and_offers = '' # or {}, [] ...?
+    prices_and_offers = {
+      a: {
+        price: 50,
+        offers: [3, 130]
+      },
+      b: {
+        price: 30,
+        offers: [2, 45]
+      },
+      c: {
+        price: 20,
+        offers: nil
+      },
+      d: {
+        price: 15,
+        offers: nil
+      }
+    } # or {}, [] ...?
     co = Checkout.new(prices_and_offers)
     goods.each { |item| co.scan(item) }
     co.total
