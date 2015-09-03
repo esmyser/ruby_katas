@@ -28,13 +28,13 @@ class Checkout
         item_price = item_values[:price]
 
         if item_values[:offers]
-          deal_quantity = item_values[:offers][:quantity]
+          deal_threshold = item_values[:offers][:quantity]
           deal_price = item_values[:offers][:price]
-          number_of_deals = item_quantity / deal_quantity
-          items_after_deal = item_quantity % deal_quantity
+          number_of_deals = item_quantity / deal_threshold
+          items_after_deal = item_quantity % deal_threshold
         end
 
-        if item_values[:offers] && item_quantity >= deal_quantity
+        if item_values[:offers] && item_quantity >= deal_threshold
           total += deal_price * number_of_deals
           total += item_price * items_after_deal
         else
