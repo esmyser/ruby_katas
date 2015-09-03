@@ -14,11 +14,17 @@ RSpec.describe Checkout do
     prices_and_offers = {
       a: {
         price: 50,
-        offers: [3, 130]
+        offers: {
+          quantity: 3,
+          price: 130
+        }
       },
       b: {
         price: 30,
-        offers: [2, 45]
+        offers: {
+          quantity: 2,
+          price: 45
+        }
       },
       c: {
         price: 20,
@@ -74,6 +80,14 @@ RSpec.describe Checkout do
 
     it 'costs 45 for B, B' do
       expect(price(['B', 'B'])).to eq 45
+    end
+
+  end
+
+  context 'product B has an offer for 2 items, and the person buys 7' do
+
+    it 'costs 165 for B, B' do
+      expect(price(['B', 'B', 'B', 'B', 'B', 'B', 'B'])).to eq 165
     end
 
   end

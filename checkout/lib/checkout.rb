@@ -24,10 +24,20 @@ class Checkout
 
     unless @items.empty?
       @items.each do |item_key, item_values|
-        if item_values[:offers] && item_values[:quantity] % item_values[:offers].first == 0
-          total += (item_values[:offers].last * (item_values[:offers].first / item_values[:quantity]))
+        item_quantity = item_values[:quantity]
+        item_price = item_values[:price]
+
+        if item_values[:offers]
+          deal_quantity = item_values[:offers][:quantity]
+          deal_price = item_values[:offers][:price]
+          items_after_deal = item_quantity % deal_quantity
+        end
+
+        if item_values[:offers] && item_quantity >= deal_quantity
+          total += (deal_price * (item_quantity / deal_quantity))
+          total += item_price * items_after_deal
         else
-          total += (item_values[:price] * item_values[:quantity])
+          total += item_price * item_quantity
         end
       end
     end
